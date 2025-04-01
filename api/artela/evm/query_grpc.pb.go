@@ -32,6 +32,8 @@ const (
 	Query_TraceBlock_FullMethodName       = "/artela.evm.Query/TraceBlock"
 	Query_BaseFee_FullMethodName          = "/artela.evm.Query/BaseFee"
 	Query_GetSender_FullMethodName        = "/artela.evm.Query/GetSender"
+	Query_DenomByAddress_FullMethodName   = "/artela.evm.Query/DenomByAddress"
+	Query_AddressByDenom_FullMethodName   = "/artela.evm.Query/AddressByDenom"
 )
 
 // QueryClient is the client API for Query service.
@@ -67,6 +69,10 @@ type QueryClient interface {
 	BaseFee(ctx context.Context, in *QueryBaseFeeRequest, opts ...grpc.CallOption) (*QueryBaseFeeResponse, error)
 	// GetSender gets sender the tx
 	GetSender(ctx context.Context, in *MsgEthereumTx, opts ...grpc.CallOption) (*GetSenderResponse, error)
+	// DenomByAddress returns the denom mapping to address
+	DenomByAddress(ctx context.Context, in *DenomByAddressRequest, opts ...grpc.CallOption) (*DenomByAddressResponse, error)
+	// DenomByAddress returns the denom mapping to address
+	AddressByDenom(ctx context.Context, in *AddressByDenomRequest, opts ...grpc.CallOption) (*AddressByDenomResponse, error)
 }
 
 type queryClient struct {
@@ -194,6 +200,24 @@ func (c *queryClient) GetSender(ctx context.Context, in *MsgEthereumTx, opts ...
 	return out, nil
 }
 
+func (c *queryClient) DenomByAddress(ctx context.Context, in *DenomByAddressRequest, opts ...grpc.CallOption) (*DenomByAddressResponse, error) {
+	out := new(DenomByAddressResponse)
+	err := c.cc.Invoke(ctx, Query_DenomByAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queryClient) AddressByDenom(ctx context.Context, in *AddressByDenomRequest, opts ...grpc.CallOption) (*AddressByDenomResponse, error) {
+	out := new(AddressByDenomResponse)
+	err := c.cc.Invoke(ctx, Query_AddressByDenom_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueryServer is the server API for Query service.
 // All implementations must embed UnimplementedQueryServer
 // for forward compatibility
@@ -227,6 +251,10 @@ type QueryServer interface {
 	BaseFee(context.Context, *QueryBaseFeeRequest) (*QueryBaseFeeResponse, error)
 	// GetSender gets sender the tx
 	GetSender(context.Context, *MsgEthereumTx) (*GetSenderResponse, error)
+	// DenomByAddress returns the denom mapping to address
+	DenomByAddress(context.Context, *DenomByAddressRequest) (*DenomByAddressResponse, error)
+	// DenomByAddress returns the denom mapping to address
+	AddressByDenom(context.Context, *AddressByDenomRequest) (*AddressByDenomResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
 
@@ -272,6 +300,12 @@ func (UnimplementedQueryServer) BaseFee(context.Context, *QueryBaseFeeRequest) (
 }
 func (UnimplementedQueryServer) GetSender(context.Context, *MsgEthereumTx) (*GetSenderResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSender not implemented")
+}
+func (UnimplementedQueryServer) DenomByAddress(context.Context, *DenomByAddressRequest) (*DenomByAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DenomByAddress not implemented")
+}
+func (UnimplementedQueryServer) AddressByDenom(context.Context, *AddressByDenomRequest) (*AddressByDenomResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddressByDenom not implemented")
 }
 func (UnimplementedQueryServer) mustEmbedUnimplementedQueryServer() {}
 
@@ -520,6 +554,42 @@ func _Query_GetSender_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_DenomByAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DenomByAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).DenomByAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_DenomByAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).DenomByAddress(ctx, req.(*DenomByAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Query_AddressByDenom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddressByDenomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).AddressByDenom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_AddressByDenom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).AddressByDenom(ctx, req.(*AddressByDenomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Query_ServiceDesc is the grpc.ServiceDesc for Query service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -578,6 +648,14 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetSender",
 			Handler:    _Query_GetSender_Handler,
+		},
+		{
+			MethodName: "DenomByAddress",
+			Handler:    _Query_DenomByAddress_Handler,
+		},
+		{
+			MethodName: "AddressByDenom",
+			Handler:    _Query_AddressByDenom_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

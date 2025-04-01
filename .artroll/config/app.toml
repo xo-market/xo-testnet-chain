@@ -21,8 +21,8 @@ query-gas-limit = "0"
 pruning = "nothing"
 
 # These are applied if and only if the pruning strategy is custom.
-# pruning-keep-recent = "2"
-# pruning-interval = "10"
+pruning-keep-recent = "0"
+pruning-interval = "0"
 
 # HaltHeight contains a non-zero block height at which a node will gracefully
 # halt and shutdown that can be used to assist upgrades and testing.
@@ -133,7 +133,7 @@ enable = true
 swagger = false
 
 # Address defines the API server to listen on.
-address = "tcp://0.0.0.0:1317"
+address = "tcp://localhost:1317"
 
 # MaxOpenConnections defines the number of maximum open connections.
 max-open-connections = 1000
@@ -191,7 +191,7 @@ enable = true
 
 # snapshot-interval specifies the block interval at which local state sync snapshots are
 # taken (0 to disable).
-snapshot-interval = 2000
+snapshot-interval = 0
 
 # snapshot-keep-recent specifies the number of recent snapshots to keep and serve (0 to keep all).
 snapshot-keep-recent = 2
@@ -262,7 +262,7 @@ enable = true
 address = "0.0.0.0:8545"
 
 # Address defines the EVM WebSocket server address to bind to.
-ws-address = "0.0.0.0:8546"
+ws-address = "127.0.0.1:8546"
 
 # API defines a list of JSON-RPC namespaces that should be enabled
 # Example: "eth,txpool,personal,net,debug,web3"

@@ -2,7 +2,7 @@
 
 KEY="mykey"
 
-CHAINID="artroll_11820-1"
+CHAINID="xo_111820-1"
 MONIKER="localtestnet"
 KEYRING="test"
 KEYALGO="eth_secp256k1"
@@ -116,6 +116,15 @@ else
     sed -i 's/prometheus-retention-time = 0/prometheus-retention-time = 1000000000000/' $workdir/config/app.toml
     # sed -i 's/timeout_commit = "5s"/timeout_commit = "500ms"/' $workdir/config/config.toml
 fi
+
+sed -i '' 's/timeout_propose = "3s"/timeout_propose = "100ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_propose_delta = "500ms"/timeout_propose_delta = "50ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_prevote = "1s"/timeout_prevote = "100ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_prevote_delta = "500ms"/timeout_prevote_delta = "1ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_precommit = "1s"/timeout_precommit = "100ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_precommit_delta = "500ms"/timeout_precommit_delta = "1ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_commit = "5s"/timeout_commit = "100ms"/g' $workdir/config/config.toml
+sed -i '' 's/timeout_broadcast_tx_commit = "10s"/timeout_broadcast_tx_commit = "500ms"/g' $workdir/config/config.toml
 
 if [[ $1 == "pending" ]]; then
     echo "pending mode is on, please wait for the first block committed."

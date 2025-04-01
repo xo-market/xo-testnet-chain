@@ -22,13 +22,13 @@ import (
 
 const (
 	// MainnetChainID defines the Artela EIP155 chain ID for mainnet
-	MainnetChainID = "artela_11821"
+	MainnetChainID = "xo_111821"
 	// TestnetChainID defines the Artela EIP155 chain ID for testnet
-	TestnetChainID = "artela_11822"
+	TestnetChainID = "xo_111822"
 
-	DevnetChainID = "artela_11823"
+	DevnetChainID = "xo_111823"
 
-	LocalChainID = "artela_11820"
+	LocalChainID = "xo_111820"
 	// BaseDenom defines the Artela mainnet denomination
 	BaseDenom = "aart"
 )

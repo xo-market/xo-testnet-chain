@@ -5,19 +5,17 @@ services:
   artroll:
     container_name: artroll
     # The build config can be used for debugging and testing changes to the Dockerfile
-    # build: .
+    build: .
 
-    # The image config can be used for running against published images
-    image: artelanetwork/rollkit:latest
-
-    # Used for targetting localhost as if you were outside the container
-    network_mode: host
+    ports:
+      - "8545:8545"  # forward port to your host machine
 
     # Always pull the latest image
     pull_policy: always
 
     # The command config is used for launching the GM rollup once the Docker container is running
-    command: rollkit start --rollkit.aggregator --rollkit.da_address http://localhost:7980
+    command: rollkit start --rollkit.aggregator --rollkit.da_address http://local-da:7980
+    
     depends_on:
       - local-da
 

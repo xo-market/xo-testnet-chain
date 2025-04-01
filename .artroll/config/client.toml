@@ -6,7 +6,7 @@
 ###############################################################################
 
 # The network chain ID
-chain-id = "artroll_11820-1"
+chain-id = "xo_111820-1"
 
 # The keyring's backend, where the keys are stored (os|file|kwallet|pass|test|memory)
 keyring-backend = "test"

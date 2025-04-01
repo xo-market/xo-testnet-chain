@@ -149,10 +149,10 @@ func (tx DynamicFeeTx) Validate() error {
 		)
 	}
 
-	if !(chainID.Cmp(big.NewInt(11820)) == 0 || chainID.Cmp(big.NewInt(11823)) == 0 || chainID.Cmp(big.NewInt(11822)) == 0 || chainID.Cmp(big.NewInt(11821)) == 0) {
+	if !(chainID.Cmp(big.NewInt(111820)) == 0 || chainID.Cmp(big.NewInt(111823)) == 0 || chainID.Cmp(big.NewInt(111822)) == 0 || chainID.Cmp(big.NewInt(111821)) == 0) {
 		return errorsmod.Wrapf(
 			errortypes.ErrInvalidChainID,
-			"chain ID must be 11822、11823、11821、11820 on Artela, got %s", chainID,
+			"chain ID must be 111822、111823、111821、111820 on XO, got %s", chainID,
 		)
 	}
 
